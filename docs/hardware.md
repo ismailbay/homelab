@@ -1,11 +1,11 @@
 ## Netzwerk
----
 
 * Linksys WRT3200ACM mit [OpenWrt](https://openwrt.org)
 * Netgear GS105e
 
 ## Proxmox Main Node
----
+
+Dieser Server hostet alle Kubernetes VMs und eine VM für TrueNAS Scale.
 
 | Teil                                  | Modell                    | €             |
 |---------------------------------------|---------------------------|--------------:|
@@ -20,12 +20,10 @@
 |                                       | **Summe**                 | **ca. 1250**  |
 
 ## Proxmox Mini Node
----
 
 [Fujitsu Esprimo Q520](motivation?id=die-ersten-experimente) dient nun als Staging K3s Cluster. 
 
 ## Ausbau in Zukunft
----
 
 * UniFi Switch Pro 24 PoE (Layer 3)
 * UniFi Access Points

@@ -1,5 +1,4 @@
 ## Warum?
----
 
 In der Arbeit fehlt oft die Möglichkeit neue Technologien zu probieren. Entweder fehlt mir die Zeit dafür oder ich kann die Technologie nicht ohne Risiko auf andere Komponenten in der Infrastruktur einsetzen. 
 
@@ -12,7 +11,6 @@ Leider (oder zum Glück?) zeigt das neu Gelernte auf, wie wenig man eigentlich w
 ⚠️ Das ist ein **Lernprojekt für mich**. Bitte beachte, dass vieles hier inkorrekt/lückenhaft sein kann und wird.
 
 ## Die ersten Experimente
----
 
 In 2022 habe ich bereits mit dem Projekt begonnen und die ersten Erfahrungen mit [Proxmox](https://www.proxmox.com/en/) gesammelt.
 
@@ -28,7 +26,6 @@ Für die ersten Experimente wollte ich möglichst wenig Geld ausgeben. Auf [will
 Ich war positiv überrascht, wie viel Compute Power ein so billiger MiniPC liefern kann. Es war problemlos möglich, ein k3s Cluster aus einem Master, drei Workers mit 6-8 typischen Homelab Services zu betreiben.
 
 ## Der langfristige Plan
----
 
 * Infrastructure as Code 
 * GitOps
