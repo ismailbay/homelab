@@ -39,6 +39,18 @@ Der Fokus liegt auf Einfachheit. Da ich im Bereich Netzwerk noch ein Anfänger b
                                                   |      |      -------- on-demand Geräte wie Drucker      
                                                   |      |         
                                                   |       -------- PVE Mini Node      
-                       Proxmox Main Node ----------                192.168.1.101
-                       192.168.1.201
+                       Proxmox Main Node ----------                192.168.20.101
+                       192.168.20.201
 ```
+
+## IP Adressen
+
+192.168.20.200 NetGear
+192.168.20.201 PVE Main
+192.168.20.101 PVE Mini
+192.168.20.203 TrueNAS VM
+
+192.168.20.210 k3s-master-01
+192.168.20.211 k3s-worker-01
+192.168.20.212 k3s-worker-02
+
