@@ -1,0 +1,10 @@
+---
+creation_rules:
+  - path_regex: infrastructure/ansible/.*\.sops\.ya?ml
+    key_groups:
+      - age:
+          - age150agqmrmg07t4quc4u5t3hyer86qp7eqcjgz3pawlhtwnevlgesqvl2n3w
+  - path_regex: infrastructure/terraform/.*\.sops\.ya?ml
+    key_groups:
+      - age:
+          - age150agqmrmg07t4quc4u5t3hyer86qp7eqcjgz3pawlhtwnevlgesqvl2n3w
