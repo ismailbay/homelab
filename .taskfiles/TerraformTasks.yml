@@ -1,0 +1,25 @@
+---
+version: "3"
+
+tasks:
+
+  validate:
+    desc: Check whether the configuration is valid
+    dir: infrastructure/terraform/cluster-main
+    cmds:
+      - terraform validate
+
+  plan:
+    desc: Show changes required by the current configuration
+    deps: [validate]
+    dir: infrastructure/terraform/cluster-main
+    cmds:
+      - terraform plan
+    silent: true
+
+  apply:
+    desc: Create or update infrastructure
+    deps: [plan]
+    dir: infrastructure/terraform/cluster-main
+    cmds:
+      - terraform apply
