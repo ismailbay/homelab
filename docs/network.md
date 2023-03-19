@@ -1,4 +1,4 @@
-Der Fokus liegt auf Einfachheit. Da ich im Networkbereich ein Anfänger bin, ist die Segmentierung und die Sicherheit noch ziemlich schlecht.
+Der Fokus liegt auf Einfachheit. Da ich im Bereich Netzwerk noch ein Anfänger bin, ist die Segmentierung und die Sicherheit noch ziemlich schlecht.
 
 ## Topologie
 

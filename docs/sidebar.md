@@ -2,7 +2,8 @@
 - [Motivation](introduction)
 - [Hardware](hardware)
 - [Networking](network)
-- [Hardware Provisionierung](provisioning)
-- [Kubernetes GitOps](gitops)
+- [Proxmox Install](proxmox-setup)
+- [IaC](provisioning)
+- [GitOps](gitops)
 - [Snippets](snippets)
 

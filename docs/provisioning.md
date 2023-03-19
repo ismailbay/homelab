@@ -1,5 +1,3 @@
 ## Terraform
-🚧 WIP
 
 ## Ansible
-🚧 WIP
