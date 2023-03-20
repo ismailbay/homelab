@@ -101,7 +101,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_worker" {
 }
 
 locals {
-  k3s_rendered = templatefile("./templates/cluster-main.yaml.tftpl", {
+  k3s_rendered = templatefile("./templates/cluster-main.yml.tftpl", {
     master_ips = proxmox_vm_qemu.proxmox_vm_master.*.default_ipv4_address
     worker_ips = proxmox_vm_qemu.proxmox_vm_worker.*.default_ipv4_address
   })
@@ -109,5 +109,5 @@ locals {
 
 resource "local_file" "k3s_inventory" {
   content  = local.k3s_rendered
-  filename = "../../ansible/inventory/cluster-main.yaml"
+  filename = "../../ansible/inventory/cluster-main.yml"
 }

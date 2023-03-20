@@ -45,12 +45,16 @@ Der Fokus liegt auf Einfachheit. Da ich im Bereich Netzwerk noch ein Anfänger b
 
 ## IP Adressen
 
-192.168.20.200 NetGear
-192.168.20.201 PVE Main
-192.168.20.101 PVE Mini
-192.168.20.203 TrueNAS VM
-
-192.168.20.210 k3s-master-01
-192.168.20.211 k3s-worker-01
-192.168.20.212 k3s-worker-02
-
+| IP                 | Machine/VM    |
+| ------------------ | ------------- |
+| 192.168.20.101     | PVE Mini      |
+| 192.168.20.200     | NetGear       |
+| 192.168.20.201     | PVE Main      |
+| 192.168.20.202     | ?             |
+| 192.168.20.203     | TrueNAS VM    |
+| 192.168.20.210     | k3s-0 |
+| 192.168.20.211     | k3s-worker-01 |
+| 192.168.20.212     | k3s-worker-02 |
+| 192.168.20.220     | k3s VirtualIP |
+| 192.168.20.221     | traefik LB    |
+| 192.168.20.231-240 | MetalLB range |

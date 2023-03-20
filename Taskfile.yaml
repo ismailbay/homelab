@@ -14,10 +14,10 @@ env:
 
 includes:
   precommit: .taskfiles/PrecommitTasks.yml
+  ansible: .taskfiles/AnsibleTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
 
 tasks:
-
   default:
     silent: true
     cmds:
