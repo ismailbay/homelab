@@ -16,6 +16,7 @@ includes:
   precommit: .taskfiles/PrecommitTasks.yml
   ansible: .taskfiles/AnsibleTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
+  cloudflare: .taskfiles/Cloudflare.yml
 
 tasks:
   default:

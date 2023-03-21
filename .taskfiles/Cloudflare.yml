@@ -1,0 +1,24 @@
+---
+version: "3"
+
+tasks:
+
+  validate:
+    desc: Check whether the configuration is valid
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform validate
+
+  plan:
+    desc: Show changes required by the current configuration
+    deps: [validate]
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform plan
+    silent: true
+
+  apply:
+    desc: Create or update infrastructure
+    dir: infrastructure/terraform/cloudflare
+    cmds:
+      - terraform apply
