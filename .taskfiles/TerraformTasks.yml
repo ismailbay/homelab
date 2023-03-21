@@ -19,7 +19,6 @@ tasks:
 
   apply:
     desc: Create or update infrastructure
-    deps: [plan]
     dir: infrastructure/terraform/cluster-main
     cmds:
       - terraform apply
