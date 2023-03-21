@@ -1,0 +1,15 @@
+---
+kubernetes:
+  children: 
+    master:
+      hosts:
+%{ for index, m_ip in master_ips ~}
+        k8s-master-${index + 1}:
+          ansible_host: ${m_ip}
+%{ endfor ~}
+    worker:
+      hosts:
+%{ for index, w_ip in worker_ips ~}
+        k8s-worker-${index + 1}:
+          ansible_host: ${w_ip}
+%{ endfor ~}
