@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "proxmox_vm_master" {
   count = var.num_k3s_masters
-  name  = "k3s-master-0${count.index + 1}"
+  name  = "k8s-master-0${count.index + 1}"
   desc  = "K3S Master Node"
   vmid  = 200 + count.index + 1
 
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
 resource "proxmox_vm_qemu" "proxmox_vm_worker" {
   count = var.num_k3s_workers
-  name  = "k3s-worker-0${count.index + 1}"
+  name  = "k8s-worker-0${count.index + 1}"
   desc  = "K3S Worker Node"
   vmid  = 200 + var.num_k3s_masters + count.index + 1
 
@@ -101,7 +101,8 @@ resource "proxmox_vm_qemu" "proxmox_vm_worker" {
 }
 
 locals {
-  k3s_rendered = templatefile("./templates/cluster-main.yml.tftpl", {
+  k3s_rendered = templatefile("./templates/hosts.yml.tftpl", {
+    # TODO: map name to ip address
     master_ips = proxmox_vm_qemu.proxmox_vm_master.*.default_ipv4_address
     worker_ips = proxmox_vm_qemu.proxmox_vm_worker.*.default_ipv4_address
   })
@@ -109,5 +110,5 @@ locals {
 
 resource "local_file" "k3s_inventory" {
   content  = local.k3s_rendered
-  filename = "../../ansible/inventory/cluster-main.yml"
+  filename = "../../ansible/inventory/hosts.yml"
 }
