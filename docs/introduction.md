@@ -1,5 +1,3 @@
-## Warum?
-
 In der Arbeit fehlt oft die Möglichkeit, neue Technologien auszuprobieren. Entweder fehlt mir die Zeit dafür oder ich kann die Technologie nicht ohne Risiko auf andere Komponenten in der Infrastruktur anwenden.
 
 Ein typisches Beispiel ist der Einsatz eines neuen Ingress Controllers oder von Kernkomponenten von Kubernetes wie cert-manager, Kyverno, Descheduler, usw.
