@@ -1,0 +1,40 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: home-kubernetes-staging
+  namespace: flux-system
+spec:
+  interval: 30m
+  ref:
+    branch: flux
+  url: "https://github.com/ismailbay/homelab"
+  ignore: |
+    # exclude all
+    /*
+    # include kubernetes directory
+    !/kubernetes
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-staging
+  namespace: flux-system
+spec:
+  interval: 30m
+  path: ./kubernetes/clusters/staging/flux-system
+  prune: true
+  wait: false
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes-staging
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+      - kind: Secret
+        name: cluster-secrets

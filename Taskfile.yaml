@@ -15,6 +15,7 @@ env:
 includes:
   precommit: .taskfiles/PrecommitTasks.yml
   ansible: .taskfiles/AnsibleTasks.yml
+  cluster: .taskfiles/ClusterTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   cloudflare: .taskfiles/Cloudflare.yml
 

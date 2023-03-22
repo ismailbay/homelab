@@ -39,7 +39,7 @@ Der Fokus liegt auf Einfachheit. Da ich im Bereich Netzwerk noch ein Anfänger b
                                                   |      |      -------- on-demand Geräte wie Drucker      
                                                   |      |         
                                                   |       -------- PVE Mini Node      
-                       Proxmox Main Node ----------                192.168.20.101
+                       Proxmox Main Node ----------                192.168.20.100
                        192.168.20.201
 ```
 
@@ -47,7 +47,7 @@ Der Fokus liegt auf Einfachheit. Da ich im Bereich Netzwerk noch ein Anfänger b
 
 | IP                 | Machine/VM    |
 | ------------------ | ------------- |
-| 192.168.20.101     | PVE Mini      |
+| 192.168.20.100     | PVE Mini      |
 | 192.168.20.200     | NetGear       |
 | 192.168.20.201     | PVE Main      |
 | 192.168.20.202     | ?             |
