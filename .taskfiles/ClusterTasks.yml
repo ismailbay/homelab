@@ -12,7 +12,7 @@ tasks:
     desc: Install Flux into your cluster
     cmds:
       - kubectl create namespace flux-system || true
-      - kubectl apply --kustomize kubernetes/clusters/staging/flux-system/bootstrap
+      - kubectl apply --kustomize kubernetes/bootstrap
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
       - sops --decrypt {{.KUBERNETES_DIR}}/clusters/staging/flux-system/cluster-secrets.sops.yaml | kubectl apply -f -
       - kubectl apply -f {{.KUBERNETES_DIR}}/clusters/staging/flux-system/cluster-settings.yaml
