@@ -8,11 +8,10 @@ tasks:
     cmds:
       - flux check --pre
 
-  install:
-    desc: Install Flux into your cluster
+  install-staging:
+    desc: Install Flux into the Staging Cluster
     cmds:
-      - kubectl create namespace flux-system || true
-      - kubectl apply --kustomize kubernetes/bootstrap
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
       - sops --decrypt {{.KUBERNETES_DIR}}/clusters/staging/flux-system/cluster-secrets.sops.yaml | kubectl apply -f -
       - kubectl apply -f {{.KUBERNETES_DIR}}/clusters/staging/flux-system/cluster-settings.yaml
@@ -23,3 +22,9 @@ tasks:
           Age key file is not found. Did you forget to create it?
     vars:
       SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+
+  reconcile-staging:
+    desc: Force reconcile
+    cmds:
+      - flux reconcile -n flux-system source git home-kubernetes-staging
+      - flux reconcile -n flux-system kustomization cluster-staging
