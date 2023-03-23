@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
-  name: home-kubernetes-staging
+  name: home-kubernetes
   namespace: flux-system
 spec:
   interval: 30m
@@ -18,7 +18,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-staging
+  name: cluster
   namespace: flux-system
 spec:
   interval: 30m
@@ -27,7 +27,7 @@ spec:
   wait: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes-staging
+    name: home-kubernetes
   decryption:
     provider: sops
     secretRef:

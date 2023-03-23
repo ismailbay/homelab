@@ -26,8 +26,8 @@ tasks:
   reconcile-staging:
     desc: Force reconcile
     cmds:
-      - flux reconcile -n flux-system source git home-kubernetes-staging
-      - flux reconcile -n flux-system kustomization cluster-staging
+      - flux reconcile -n flux-system source git home-kubernetes
+      - flux reconcile -n flux-system kustomization cluster
 
   hr-restart:
     desc: Restart all failed Helm Releases
