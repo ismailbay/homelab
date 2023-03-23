@@ -84,6 +84,6 @@ tasks:
       - task: helmreleases
       - task: helmrepositories
       - task: gitrepositories
-      - task: certificates
+      # - task: certificates
       - task: ingresses
       - task: pods
