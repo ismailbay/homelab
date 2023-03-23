@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hajimari
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: hajimari
+      version: 2.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: hajimari
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    hajimari:
+      name: Ismail
+      title: Home
+      defaultEnable: true
+      alwaysTargetBlank: true
+      namespaceSelector:
+        any: true
+      globalBookmarks:
+        - group: Root
+          bookmarks:
+            - name: openWrt
+              url: 'http://192.168.1.1'
+            - name: Proxmox
+              url: 'https://192.168.1.201:8006'
+        - group: Me
+          bookmarks:
+            - name: Github
+              url: 'https://github.com/ismailbay/'
+            - name: Gmail
+              url: 'http://gmail.com'
+            - name: Twitter
+              url: 'https://twitter.com/of_ismailbay'
+        - group: Sources
+          bookmarks:
+            - name: CNCF
+              url: 'https://www.cncf.io'
+            - name: ArtifactHUB
+              url: 'https://artifacthub.io'
+    env:
+      TZ: Europe/Vienna
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: hajimari-settings
+    persistence:
+      data:
+        enabled: true
+        type: emptyDir
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128M
