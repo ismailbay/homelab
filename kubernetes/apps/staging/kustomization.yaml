@@ -5,3 +5,4 @@ resources:
   - ../base/flux-system
   - ../base/default
   - ../base/monitoring
+  - ../base/home-automation
