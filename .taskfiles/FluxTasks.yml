@@ -11,7 +11,7 @@ tasks:
   install:
     desc: Install Flux into the Cluster
     cmds:
-      - flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --token=${GITHUB_TOKEN}} --branch=flux --path=kubernetes/clusters/{{.CLI_ARGS | default "staging"}} --personal
+      - flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --token=${GITHUB_TOKEN} --branch=flux --path=kubernetes/clusters/{{.CLI_ARGS | default "staging"}} --personal
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
       - sops --decrypt {{.KUBERNETES_DIR}}/clusters/{{.CLI_ARGS | default "staging"}}/cluster-secrets.sops.yaml | kubectl apply -f -
     preconditions:
@@ -24,8 +24,8 @@ tasks:
   reconcile:
     desc: Force reconcile
     cmds:
-      - flux reconcile -n flux-system source git home-kubernetes
-      - flux reconcile -n flux-system kustomization cluster
+      - flux reconcile -n flux-system source git flux-system
+      - flux reconcile -n flux-system kustomization flux-system
 
   hr-restart:
     desc: Restart all failed Helm Releases
