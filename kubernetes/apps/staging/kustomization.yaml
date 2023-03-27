@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ../base/default
   - ../base/kube-system
+  - ../base/networking
