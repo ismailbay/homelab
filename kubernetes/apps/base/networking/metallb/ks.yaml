@@ -26,7 +26,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-metallb
+    - name: metallb
   path: ./kubernetes/apps/base/networking/metallb/config
   prune: true
   sourceRef:
