@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: metallb
     - name: metallb-config
-  path: ./kubernetes/apps/base/networking/k8s-gateway/app
+  path: ./kubernetes/infrastructure/controllers/k8s-gateway/app
   prune: true
   sourceRef:
     kind: GitRepository

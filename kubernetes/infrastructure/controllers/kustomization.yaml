@@ -5,4 +5,5 @@ resources:
   - ./metallb/ks.yaml
   - ./k8s-gateway/ks.yaml
   - cert-manager.yaml
+  - kube-vip.yaml
   - weave-gitops.yaml
