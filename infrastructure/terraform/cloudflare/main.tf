@@ -97,7 +97,7 @@ resource "cloudflare_record" "root" {
   for_each = { for k, v in data.cloudflare_zones.domain.zones : v.name => v }
   name     = each.key
   zone_id  = each.value.id
-  value    = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
+  value    = "ipv4.${each.key}"
   proxied  = true
   type     = "CNAME"
   ttl      = 1
