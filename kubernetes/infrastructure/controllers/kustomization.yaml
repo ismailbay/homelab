@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./metallb/ks.yaml
   - ./k8s-gateway/ks.yaml
+  - ./traefik/ks.yaml
   - cert-manager.yaml
   - kube-vip.yaml
   - weave-gitops.yaml
