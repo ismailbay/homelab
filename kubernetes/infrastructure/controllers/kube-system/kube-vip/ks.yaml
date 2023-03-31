@@ -2,13 +2,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: traefik
+  name: infrastructure-controllers-kube-vip
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: metallb
-    - name: metallb-config
-  path: ./kubernetes/infrastructure/controllers/traefik/app
+  path: ./kubernetes/infrastructure/controllers/kube-system/kube-vip/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
   decryption:
     provider: sops
     secretRef:
@@ -19,15 +20,11 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: traefik
-      namespace: networking
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      name: kube-vip
+      namespace: kube-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m

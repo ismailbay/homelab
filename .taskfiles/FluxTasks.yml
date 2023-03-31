@@ -14,7 +14,8 @@ tasks:
     cmds:
       - flux bootstrap github --owner=${GITHUB_USER} --repository=${GITHUB_REPO} --token=${GITHUB_TOKEN} --branch=networking --path=kubernetes/clusters/{{.CLI_ARGS | default "staging"}} --personal
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
-      - sops --decrypt {{.KUBERNETES_DIR}}/clusters/{{.CLI_ARGS | default "staging"}}/cluster-secrets.sops.yaml | kubectl apply -f -
+      - sops --decrypt {{.KUBERNETES_DIR}}/clusters/{{.CLI_ARGS | default "staging"}}/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - kubectl apply -f {{.KUBERNETES_DIR}}/clusters/{{.CLI_ARGS | default "staging"}}/vars/cluster-settings.yaml
     preconditions:
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |

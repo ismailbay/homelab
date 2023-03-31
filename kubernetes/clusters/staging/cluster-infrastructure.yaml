@@ -40,6 +40,28 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
+  patches:
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-age
+          postBuild:
+            substituteFrom:
+              - kind: ConfigMap
+                name: cluster-settings
+              - kind: Secret
+                name: cluster-secrets
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        version: v1beta2
+        kind: Kustomization
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
   prune: true
   wait: true
 ---
@@ -68,7 +90,6 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  prune: true
   patches:
     - patch: |
         - op: replace
@@ -77,3 +98,25 @@ spec:
       target:
         kind: ClusterIssuer
         name: letsencrypt
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-age
+          postBuild:
+            substituteFrom:
+              - kind: ConfigMap
+                name: cluster-settings
+              - kind: Secret
+                name: cluster-secrets
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        version: v1beta2
+        kind: Kustomization
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
+  prune: true
