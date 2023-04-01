@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: infrastructure-controllers-kube-vip
+  namespace: flux-system
+spec:
+  path: ./kubernetes/infrastructure/controllers/kube-system/kube-vip/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+      - kind: Secret
+        name: cluster-secrets
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      name: kube-vip
+      namespace: kube-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

@@ -1,16 +1,11 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-manager
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: cert-manager
   namespace: cert-manager
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: cert-manager
@@ -19,6 +14,17 @@ spec:
         kind: HelmRepository
         name: jetstack
         namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     installCRDs: true
     extraArgs:
@@ -29,3 +35,8 @@ spec:
       nameservers:
         - "1.1.1.1"
         - "9.9.9.9"
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
+        prometheusInstance: monitoring

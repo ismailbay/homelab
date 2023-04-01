@@ -37,6 +37,7 @@ kubeconfig
 *.agekey
 *.pub
 *.key
+.github.env
 
 # Files
 *.log

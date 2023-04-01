@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "proxmox_vm_master" {
   count = var.num_k3s_masters
-  name  = "k8s-master-${count.index + 1}"
+  name  = "k8s-master-0${count.index + 1}"
   desc  = "K3S Master Node"
   vmid  = 200 + count.index + 1
 
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
 resource "proxmox_vm_qemu" "proxmox_vm_worker" {
   count = var.num_k3s_workers
-  name  = "k8s-worker-${count.index + 1}"
+  name  = "k8s-worker-0${count.index + 1}"
   desc  = "K3S Worker Node"
   vmid  = 200 + var.num_k3s_masters + count.index + 1
 

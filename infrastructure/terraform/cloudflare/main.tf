@@ -35,12 +35,13 @@ provider "cloudflare" {
 
 data "cloudflare_zones" "domain" {
   filter {
-    name = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
+    status = "active"
   }
 }
 
 resource "cloudflare_zone_settings_override" "cloudflare_settings" {
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
+  for_each = { for k, v in data.cloudflare_zones.domain.zones : v.name => v }
+  zone_id  = each.value.id
   settings {
     ssl                      = "strict"
     always_use_https         = "on"
@@ -83,19 +84,21 @@ data "http" "ipv4" {
 }
 
 resource "cloudflare_record" "ipv4" {
-  name    = "ipv4"
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = chomp(data.http.ipv4.response_body)
-  proxied = true
-  type    = "A"
-  ttl     = 1
+  for_each = { for k, v in data.cloudflare_zones.domain.zones : v.name => v }
+  name     = "ipv4"
+  zone_id  = each.value.id
+  value    = chomp(data.http.ipv4.response_body)
+  proxied  = true
+  type     = "A"
+  ttl      = 1
 }
 
 resource "cloudflare_record" "root" {
-  name    = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
-  proxied = true
-  type    = "CNAME"
-  ttl     = 1
+  for_each = { for k, v in data.cloudflare_zones.domain.zones : v.name => v }
+  name     = each.key
+  zone_id  = each.value.id
+  value    = "ipv4.${each.key}"
+  proxied  = true
+  type     = "CNAME"
+  ttl      = 1
 }

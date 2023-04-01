@@ -6,7 +6,9 @@ resources:
   - ./bjw-s.yaml
   - ./hajimari.yaml
   - ./jetstack.yaml
+  - ./k8s-gateway.yaml
+  - ./kubernetes-dashboard.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
-  - ./kubernetes-dashboard.yaml
+  - ./traefik.yaml
   - ./weave-gitops.yaml
