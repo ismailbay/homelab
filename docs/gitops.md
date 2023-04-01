@@ -8,37 +8,35 @@
 * **repositories** beinhaltet die Artefakt Repos wie Helm, Git, ...
 * **apps** können für jede Umgebung angepasst werden. 
 
-> ⚠️ alle Apps werden durch eine einzige `Kustomization` ausgeliefert. Eine bessere aber aufwändigere Variante für komplexere Setups wäre der Ansatz, dass die einzelnen Apps auch als `Kustomization` definiert werden. Damit können u.A. Abhängigkeiten unter Apps und HealthChecks verwendet werden.
-  
   ```
-  ├── apps
-  │   ├── base
-  │   │   └── default
-  │   ├── production
-  │   │   └── kustomization.yaml
-  │   └── staging
-  │       └── kustomization.yaml
-  ├── clusters
-  │   ├── production
-  │   └── staging
-  │       ├── cluster-apps.yaml
-  │       ├── cluster-infrastructure.yaml
-  │       ├── cluster-secrets.sops.yaml
-  │       ├── cluster-settings.yaml
-  │       └── flux-system
-  └── infrastructure
+   ├── apps
+   │   ├── base
+   │   │   └── default
+   │   ├── production
+   │   │   └── kustomization.yaml
+   │   └── staging
+   │       └── kustomization.yaml
+   ├── clusters
+   │   ├── production
+   │   └── staging
+   │       ├── cluster-apps.yaml
+   │       ├── cluster-infrastructure.yaml
+   │       ├── flux-system
+   │       └── vars
+   └── infrastructure
       ├── configs
       │   ├── cluster-issuer.yaml
       │   ├── kustomization.yaml
       │   └── secret.sops.yaml
       ├── controllers
-      │   ├── cert-manager.yaml
-      │   ├── kustomization.yaml
-      │   └── weave-gitops.yaml
+      │   ├── cert-manager
+      │   ├── kube-system
+      │   ├── monitoring
+      │   └── networking
       └── sources
-          ├── git
-          ├── helm
-          └── kustomization.yaml
+         ├── git
+         ├── helm
+         └── kustomization.yaml
   ```
 
 ### Bootstrap
@@ -50,7 +48,7 @@ Danach noch diese Variablen zu `.config.env` hinzufügen:
   ```
   export GITHUB_USER="ismailbay"
   export GITHUB_REPO="homelab"
-  export FLUX_GITHUB_TOKEN="github_pat_superSecretToken123"
+  export GITHUB_TOKEN="github_pat_superSecretToken123"
   ```
 
 Das Taskfile stellt ein paar convenience Befehle bereit:
@@ -73,4 +71,3 @@ Das Taskfile stellt ein paar convenience Befehle bereit:
           dependsOn:
               infrastructure-sources
   ```
-

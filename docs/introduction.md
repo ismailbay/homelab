@@ -1,12 +1,6 @@
-In der Arbeit fehlt oft die Möglichkeit, neue Technologien auszuprobieren. Entweder fehlt mir die Zeit dafür oder ich kann die Technologie nicht ohne Risiko auf andere Komponenten in der Infrastruktur anwenden.
+> ⚠️ Das ist ein **Lernprojekt für mich**. Bitte beachte, dass vieles hier inkorrekt oder lückenhaft sein kann und wird. Während ich mich tiefer ins DevOps/GitOps-Rabbit-Hole begebe, werde ich versuchen, so viel wie möglich hier zu dokumentieren. Diese Seiten sind in erster Linie für mich gedacht. Daher wird die Qualität oft nicht gut genug sein.
 
-Ein typisches Beispiel ist der Einsatz eines neuen Ingress Controllers oder von Kernkomponenten von Kubernetes wie cert-manager, Kyverno, Descheduler, usw.
-
-Deshalb wollte ich zuhause einen eigenen Kubernetes-Cluster aufbauen und diese Technologien ohne Risiko testen.
-
-Leider (oder zum Glück?) zeigt das neu erworbene Wissen, wie wenig ich eigentlich weiß und wie viel ich noch zu entdecken und zu lernen habe. Während ich mich tiefer ins DevOps/GitOps-Rabbit-Hole begebe, werde ich versuchen, so viel wie möglich hier zu dokumentieren. Diese Seiten sind in erster Linie für mich gedacht. Daher wird die Qualität oft nicht gut genug sein.
-
-> ⚠️ Das ist ein **Lernprojekt für mich**. Bitte beachte, dass vieles hier inkorrekt oder lückenhaft sein kann und wird.
+Um mich näher mit Kubernetes zu beschäftigen und aktuellen Trends zu folgen, wollte ich schon lange einen eigenen Kubernetes-Cluster zur Verfügung haben.
 
 ## Die ersten Experimente
 
