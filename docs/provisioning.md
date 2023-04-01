@@ -5,4 +5,4 @@ In Zukunft möchte ich noch die Verwaltung von TrueNAS Storage über Terraform a
 
 ## Ansible
 
-Ansible kommt bei der Provisionierung von k3s zum Einsatz. Dank der hervorrangenden Collection von [xanmanning.k3s](https://github.com/PyratLabs/ansible-role-k3s.git) ist die Installation von k3s ein Kinderspiel.
+Ansible kommt bei der Provisionierung von k3s zum Einsatz. Dank der hervorragenden Collection von [xanmanning.k3s](https://github.com/PyratLabs/ansible-role-k3s.git) ist die Installation von k3s ein Kinderspiel.

@@ -2,7 +2,7 @@ Bevor wir die VMs per Terraform provisionieren, müssen noch einige Schritte man
 
 ## Helper Scripts
 
-[Proxmox Helper Scripts] sind nützliche Tools, die man nach jeder Proxmox-Installation ausführen sollte:
+[Proxmox Helper Scripts](https://tteck.github.io/Proxmox/) sind nützliche Tools, die man nach jeder Proxmox-Installation ausführen sollte:
 
   ```bash
   # ! wie immer soll man die Skripte vor der Ausführung anschauen und verifizieren
@@ -13,8 +13,6 @@ Bevor wir die VMs per Terraform provisionieren, müssen noch einige Schritte man
   bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean.sh)"
   # edge kernel
   bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
-  # dark mode
-  bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
   ```
 
 ## Powertop
