@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
+  - ./cowboysysop.yaml
+  - ./fairwinds.yaml
   - ./hajimari.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
