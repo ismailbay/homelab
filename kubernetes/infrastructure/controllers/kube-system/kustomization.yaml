@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kube-vip/ks.yaml
+  - ./local-path-provisioner/ks.yaml

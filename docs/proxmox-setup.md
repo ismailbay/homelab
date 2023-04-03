@@ -120,8 +120,7 @@ Zum Klonen des Repositorys:
 ### VM
 
   1. eine VM mit 4 Cores und 1 GB RAM pro TB an Speicherkapazität erstellen
-  > Ich habe nur 8 GB RAM vergeben, da ich erstens nur 12 TB Poolsize habe und zweitens keine VMs und oft 
-  gelesene Dateien am TrueNAS ablegen werde. 
+  > Ich habe nur 8 GB RAM vergeben, da ich erstens nur 12 TB Poolsize habe und zweitens keine VMs am TrueNAS ablegen werde. 
   2. Machine type auf `q35` ändern, als Bios `UEFI` auswählen
   3. SATA Controller als PCI Device hinzufügen
   4. unter Optionen Start/Shutdown Order auf 1 und Startup Delay auf 120 setzen
@@ -136,6 +135,17 @@ Mit Powertop unter TrueNAS werden die Stromsparzustände der Festplatten aktivie
 In TrueNas under "System Settings -> Advanced" 
   * add "Init/Shutdown Script" of type "Command" 
   * als Command `powertop --auto-tune` eintragen und unter "When" PostInit auswählen
+
+### Let's Encrypt Zertifikat
+
+* Unter "Credentials -> Certificates" neuen "ACME DNS Authenticator" hinzufügen und `cloudflare` konfigurieren
+* einen neuen "Certificate Signing Request" erstellen 
+* einen neuen "ACME Certificate" zu diesem CSR hinzufügen
+* self-signed TrueNAS Zertifikat auf das neu erstellte Zertifikat ändern
+
+### MinIO 
+
+* S3 unter Services konfigurieren und aktivieren
 
 ### Potenzielle Verbesserungen
 
