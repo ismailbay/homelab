@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./echo-server.yaml
   - ./hajimari.yaml
+  - ./cloudnative-pg/ks.yaml
