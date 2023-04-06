@@ -25,22 +25,70 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
   values:
+    deployment:
+      kind: Deployment
+      replicas: 1
+    service:
+      enabled: true
+      type: LoadBalancer
+      spec:
+        loadBalancerIP: "${METALLB_INGRESS_ADDR}"
+        externalTrafficPolicy: Local
+    logs:
+      general:
+        format: json
+        level: WARN
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: false
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      fallbackApiVersion: v1
+    ingressRoute:
+      dashboard:
+        enabled: false
     globalArguments:
-      - "--global.sendanonymoususage=false"
-      - "--global.checknewversion=false"
+      - "--api.insecure=true"
+      - "--serverstransport.insecureskipverify=true"
+      - "--providers.kubernetesingress.ingressclass=traefik"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.entryPoint=metrics"
     additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--log.level=INFO"
+      - "--providers.kubernetesingress.ingressendpoint.ip=${METALLB_INGRESS_ADDR}"
+      - "--providers.kubernetescrd.allowexternalnameservices=true"
+      - "--providers.kubernetesingress.allowexternalnameservices=true"
     ports:
+      traefik:
+        expose: true
       web:
         redirectTo: websecure
       websecure:
         tls:
           enabled: true
-    ingressRoute:
-      dashboard:
+          options: "default"
+      metrics:
+        port: 8082
+        expose: true
+        exposedPort: 8082
+    tlsOptions:
+      default:
+        minVersion: VersionTLS12
+        maxVersion: VersionTLS13
+        sniStrict: true
+    pilot:
+      enabled: false
+    experimental:
+      plugins:
         enabled: false
-    service:
-      spec:
-        loadBalancerIP: "${METALLB_INGRESS_ADDR}"
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
