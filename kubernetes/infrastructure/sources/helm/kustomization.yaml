@@ -13,5 +13,6 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
+  - ./node-feature-discovery.yaml
   - ./traefik.yaml
   - ./weave-gitops.yaml
