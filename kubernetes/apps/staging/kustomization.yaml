@@ -5,4 +5,5 @@ resources:
   - ../base/default
   - ../base/home
   - ../base/flux-system
+  - ../base/media
   - ../base/kube-system
