@@ -44,7 +44,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
   lifecycle {
     ignore_changes = [
-      network, target_node
+      network, target_node, qemu_os
     ]
   }
 }
@@ -95,7 +95,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_worker" {
 
   lifecycle {
     ignore_changes = [
-      network, target_node
+      network, target_node, qemu_os
     ]
   }
 }
