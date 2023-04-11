@@ -6,7 +6,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
   sockets = "1"
   cores   = 4
-  memory  = 4096
+  memory  = 6144
   scsihw  = "virtio-scsi-pci"
 
   ipconfig0   = "gw=192.168.20.1,ip=${var.k3s_master_ip_addresses[count.index]}"

@@ -19,6 +19,7 @@ fedora:
     - python3-kubernetes
     - python3-libselinux
     - python3-pyyaml
+    - vim
 
 ubuntu:
   packages:
@@ -32,3 +33,4 @@ ubuntu:
     - socat
     - python3-kubernetes
     - python3-yaml
+    - vim
