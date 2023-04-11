@@ -98,8 +98,8 @@ spec:
         enabled: true
         type: emptyDir
     nodeSelector:
-      # node-role.kubernetes.io/worker: "true"
-      feature.node.kubernetes.io/custom-intel-gpu: "true"
+      node-role.kubernetes.io/worker: "true"
+      intel.feature.node.kubernetes.io/gpu: "true"
     resources:
       requests:
         gpu.intel.com/i915: 1
@@ -107,4 +107,4 @@ spec:
         memory: 1000Mi
       limits:
         gpu.intel.com/i915: 1
-        memory: 4000Mi
+        memory: 2000Mi
