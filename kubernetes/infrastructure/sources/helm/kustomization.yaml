@@ -8,6 +8,7 @@ resources:
   - ./cowboysysop.yaml
   - ./fairwinds.yaml
   - ./hajimari.yaml
+  - ./intel.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml
