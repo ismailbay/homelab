@@ -8,10 +8,12 @@ resources:
   - ./cowboysysop.yaml
   - ./fairwinds.yaml
   - ./hajimari.yaml
+  - ./intel.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
+  - ./node-feature-discovery.yaml
   - ./traefik.yaml
   - ./weave-gitops.yaml

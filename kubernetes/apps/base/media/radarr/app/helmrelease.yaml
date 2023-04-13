@@ -1,0 +1,111 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/onedr0p/radarr-develop
+      tag: 4.4.2.6956@sha256:9144561f5b701ea67c8352eb416ab57c6a8630d2b61651475ae37d00874915f4
+    env:
+      TZ: "${TIMEZONE}"
+      PUSHOVER_DEBUG: "false"
+      RADARR__INSTANCE_NAME: Radarr
+      RADARR__PORT: &port 80
+      RADARR__LOG_LEVEL: warn
+    envFrom:
+      - secretRef:
+          name: radarr-secret
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:filmstrip
+        hosts:
+          - host: &host "radarr.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                type: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: radarr-tls
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups: [10000]
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
+    persistence:
+      media:
+        enabled: true
+        type: nfs
+        server: "${TRUENAS_ADDR}"
+        path: /mnt/tank/media
+        mountPath: /mnt/media
+      downloads:
+        enabled: true
+        type: nfs
+        server: "${TRUENAS_ADDR}"
+        path: /mnt/garbage/downloads
+        mountPath: /mnt/downloads
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 1500Mi

@@ -1,0 +1,115 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sabnzbd
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/onedr0p/sabnzbd
+      tag: 3.7.2@sha256:a6f2cdfe38c7a401d330018ee23fa3d8a26fb5eb9eec75f2921efabda9ad1f44
+    env:
+      TZ: "${TIMEZONE}"
+      SABNZBD__PORT: &port 80
+      SABNZBD__HOST_WHITELIST_ENTRIES: >-
+        sabnzbd,
+        sabnzbd.media,
+        sabnzbd.media.svc,
+        sabnzbd.media.svc.cluster,
+        sabnzbd.media.svc.cluster.local,
+        sabnzbd.ibay.dev
+    envFrom:
+      - secretRef:
+          name: sabnzbd-secret
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /api?mode=version
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:cloud-download
+        hosts:
+          - host: &host "sabnzbd.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                type: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: sabnzbd-tls
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups: [10000]
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
+    persistence:
+      media:
+        enabled: true
+        type: nfs
+        server: "${TRUENAS_ADDR}"
+        path: /mnt/tank/media
+        mountPath: /mnt/media
+      incomplete:
+        enabled: true
+        type: nfs
+        server: "${TRUENAS_ADDR}"
+        path: /mnt/garbage/downloads
+        mountPath: /mnt/downloads
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 1500Mi

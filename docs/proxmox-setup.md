@@ -56,14 +56,14 @@ Die Datei `/etc/default/grub` editieren:
 
   ```
   ...
-  GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+  GRUB_CMDLINE_LINUX_DEFAULT="quiet memtest=1 intel_iommu=on"
   ...
   ```
 
 Die Datei `/etc/kernel/cmdline` editieren:
 
   ```
-  root=ZFS=rpool/ROOT/pve-1 boot=zfs quite intel_iommu=on
+  root=ZFS=rpool/ROOT/pve-1 boot=zfs quite memtest=1 intel_iommu=on
   ```
 
 Danach müssen noch zwei Befehle ausgeführt werden:
@@ -96,6 +96,10 @@ Nach dem Reboot per SSH einloggen und überprüfen:
   # lsblk sollte keine SATA disks mehr auflisten
   lsblk
   ```
+
+### Grafana Agent
+
+Unter [Grafana Connections](https://ismailbay.grafana.net/connections/connect-data/linux-node) der Anleitung folgen und Grafana Agent auf dem Proxmox Host installieren.
 
 ## TrueNAS Scale
 

@@ -2,6 +2,16 @@
 
 Um mich näher mit Kubernetes zu beschäftigen und aktuellen Trends zu folgen, wollte ich schon lange einen eigenen Kubernetes-Cluster zur Verfügung haben.
 
+## Cloud Services in Verwendung
+
+| Service                |                                    | €      |
+| ---------------------- | ---------------------------------- | ------ |
+| GitHub                 | Repository, Projekt, Dokumentation | Gratis |
+| Cloudflare             | Domain und DNS Verwaltung          | Gratis |
+| Terraform Cloud        | Terraform State Management         | Gratis |
+| Grafana Cloud          | Monitoring & Alerting              | Gratis |
+| Oracle Cloud Free Tier | Free VM & Storage                  | Gratis |
+
 ## Die ersten Experimente
 
 In 2022 habe ich bereits mit dem Projekt begonnen und erste Erfahrungen mit Proxmox gesammelt.
