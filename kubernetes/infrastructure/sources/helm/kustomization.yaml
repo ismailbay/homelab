@@ -16,4 +16,5 @@ resources:
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
   - ./traefik.yaml
+  - ./vmware-tanzu.yaml
   - ./weave-gitops.yaml
