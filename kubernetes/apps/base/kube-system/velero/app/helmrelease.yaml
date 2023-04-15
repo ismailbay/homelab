@@ -29,6 +29,10 @@ spec:
           s3ForcePathStyle: true
           s3Url: https://truenas.${SECRET_DOMAIN}:9000
           publicUrl: https://truenas.${SECRET_DOMAIN}:9001
+      volumeSnapshotLocation:
+        name: default
+        config:
+          region: eu-central-1
       fsBackupTimeout: 4h
     initContainers:
       - name: velero-plugin-for-aws
@@ -38,6 +42,23 @@ spec:
           - mountPath: /target
             name: plugins
     deployNodeAgent: true
+    nodeAgent:
+      podVolumePath: /var/lib/kubelet/pods
+      privileged: false
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1024Mi
     credentials:
       existingSecret: velero-minio-credentials
     schedules:
@@ -54,7 +75,7 @@ spec:
       serviceMonitor:
         enabled: true
     backupsEnabled: true
-    snapshotsEnabled: false
+    snapshotsEnabled: true
     upgradeCRDs: false
     cleanUpCRDs: false
     kubectl:
