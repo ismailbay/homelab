@@ -1,0 +1,90 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: velero
+      version: 3.1.6
+      sourceRef:
+        kind: HelmRepository
+        name: vmware-tanzu
+        namespace: flux-system
+      interval: 5m
+  values:
+    configuration:
+      extraEnvVars:
+        TZ: "${TIMEZONE}"
+      provider: aws
+      backupStorageLocation:
+        name: default
+        bucket: velero
+        default: true
+        config:
+          region: eu-central-1
+          s3ForcePathStyle: true
+          s3Url: https://truenas.${SECRET_DOMAIN}:9000
+          publicUrl: https://truenas.${SECRET_DOMAIN}:9001
+      volumeSnapshotLocation:
+        name: default
+        config:
+          region: eu-central-1
+      fsBackupTimeout: 4h
+    initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.6.1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+    deployNodeAgent: true
+    nodeAgent:
+      podVolumePath: /var/lib/kubelet/pods
+      privileged: false
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1024Mi
+    credentials:
+      existingSecret: velero-minio-credentials
+    schedules:
+      daily-backup:
+        schedule: "0 21 * * *"
+        template:
+          ttl: "168h"
+      weekly-backup:
+        schedule: "0 18 * * 0"
+        template:
+          ttl: "672h"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    backupsEnabled: true
+    snapshotsEnabled: true
+    upgradeCRDs: false
+    cleanUpCRDs: false
+    kubectl:
+      image:
+        repository: ghcr.io/onedr0p/kubernetes-kubectl
+        tag: 1.27.0@sha256:bd977118655ebd961201b67102a9f3e618e8946f65c504e6b262c0e16bc4e06a
+    resources:
+      requests:
+        memory: 300Mi
+        cpu: 25m
+      limits:
+        memory: 1500Mi

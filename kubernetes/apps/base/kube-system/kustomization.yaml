@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   # - ./node-feature-discovery/ks.yaml
   # - ./intel-gpu/ks.yaml
+  - ./velero/ks.yaml
