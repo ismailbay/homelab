@@ -1,0 +1,128 @@
+---
+clusterName: home-cluster
+talosVersion: v1.4.1
+kubernetesVersion: v1.27.1
+endpoint: https://192.168.20.254:6443
+domain: home-cluster.local
+additionalMachineCertSans:
+  - home-cluster
+  - home-cluster.local
+  - kube-cluster.ibay.dev
+additionalApiServerCertSans:
+  - home-cluster.local
+allowSchedulingOnMasters: true
+clusterPodNets:
+  - 10.42.0.0/16
+clusterSvcNets:
+  - 10.43.0.0/16
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: k8s-01
+    ipAddress: 192.168.20.210
+    installDisk: /dev/sda
+    controlPlane: true
+    nameservers:
+      - 192.168.1.2
+      - 1.1.1.1
+    networkInterfaces:
+      - interface: eth0
+        addresses:
+          - 192.168.20.210/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.20.1
+        vip:
+          ip: 192.168.20.254
+
+  - hostname: k8s-02
+    ipAddress: 192.168.20.211
+    installDisk: /dev/sda
+    controlPlane: true
+    nameservers:
+      - 192.168.1.2
+      - 1.1.1.1
+    networkInterfaces:
+      - interface: eth0
+        addresses:
+          - 192.168.20.211/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.20.1
+        vip:
+          ip: 192.168.20.254
+
+  - hostname: k8s-03
+    ipAddress: 192.168.20.212
+    installDisk: /dev/sda
+    controlPlane: true
+    nameservers:
+      - 192.168.1.2
+      - 1.1.1.1
+    networkInterfaces:
+      - interface: eth0
+        addresses:
+          - 192.168.20.212/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.20.1
+        vip:
+          ip: 192.168.20.254
+
+controlPlane:
+  patches:
+    - |-
+      - op: add
+        path: /machine/kubelet/extraArgs
+        value:
+          rotate-server-certificates: "true"
+          feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true
+      - op: replace
+        path: /machine/install/wipe
+        value: true
+      - op: add
+        path: /machine/disks
+        value:
+        - device: /dev/sdb
+          partitions:
+          - mountpoint: /var/openebs/local
+      - op: add
+        path: /machine/install/extensions
+        value:
+        - image: "ghcr.io/siderolabs/iscsi-tools:v0.1.4"
+      - op: add
+        path: /cluster/controllerManager/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/scheduler/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/proxy/extraArgs
+        value:
+          bind-address: 0.0.0.0
+    - |-
+      machine:
+        files:
+          - content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+            path: /etc/cri/conf.d/20-customization.part
+            op: create
+        kubelet:
+          extraMounts:
+            - destination: /var/openebs/local
+              type: bind
+              source: /var/openebs/local
+              options:
+              - bind
+              - rshared
+              - rw
+        time:
+          disabled: false
+          servers:
+            - time.cloudflare.com
