@@ -1,4 +1,4 @@
-home-cluster-k8s-01.yaml
-home-cluster-k8s-02.yaml
-home-cluster-k8s-03.yaml
+cluster-k8s-01.yaml
+cluster-k8s-02.yaml
+cluster-k8s-03.yaml
 talosconfig

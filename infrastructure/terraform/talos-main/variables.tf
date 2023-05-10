@@ -19,9 +19,9 @@ variable "nodes" {
       macaddr     = "02:DE:4D:48:28:10"
       ip4_addr    = "192.168.20.210"
       pv_zfs      = "local-zfs"
-      memory      = 16384
+      memory      = 4096
       disk0       = "32G"
-      disk1       = "250G"
+      disk1       = "20G"
       target_node = "pve"
     },
     k8s-02 = {

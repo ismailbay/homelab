@@ -11,6 +11,7 @@ resource "proxmox_vm_qemu" "talos_vm" {
   memory      = each.value.memory
   bootdisk    = "scsi0"
   scsihw      = "virtio-scsi-pci"
+  tablet      = false
   os_type     = "cloud-init"
   ipconfig0   = "gw=192.168.20.1,ip=${each.value.ip4_addr}/24"
   ciuser      = var.common.ciuser
