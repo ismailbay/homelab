@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - cilium.yaml
   - jetstack.yaml
+  - metrics-server.yaml
   - openebs-jiva.yaml
   - weave-gitops.yaml
