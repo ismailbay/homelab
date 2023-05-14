@@ -108,6 +108,11 @@ controlPlane:
         path: /cluster/proxy/extraArgs
         value:
           bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/etcd/extraArgs
+        value:
+          heartbeat-interval: 500
+          election-timeout: 5000
     - |-
       machine:
         files:
