@@ -46,4 +46,10 @@ resource "proxmox_vm_qemu" "talos_vm" {
     id   = 0
     type = "socket"
   }
+
+  lifecycle {
+    ignore_changes = [
+      qemu_os
+    ]
+  }
 }

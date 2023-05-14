@@ -19,7 +19,7 @@ variable "nodes" {
       macaddr     = "02:DE:4D:48:28:10"
       ip4_addr    = "192.168.20.210"
       pv_zfs      = "local-zfs"
-      memory      = 16384
+      memory      = 12288
       disk0       = "32G"
       disk1       = "250G"
       target_node = "pve"
@@ -29,7 +29,7 @@ variable "nodes" {
       macaddr     = "02:DE:4D:48:28:11"
       ip4_addr    = "192.168.20.211"
       pv_zfs      = "local-zfs"
-      memory      = 16384
+      memory      = 12288
       disk0       = "32G"
       disk1       = "250G"
       target_node = "pve"
@@ -39,7 +39,7 @@ variable "nodes" {
       macaddr     = "02:DE:4D:48:28:12"
       ip4_addr    = "192.168.20.212"
       pv_zfs      = "local-zfs"
-      memory      = 16384
+      memory      = 12288
       disk0       = "32G"
       disk1       = "250G"
       target_node = "pve"
